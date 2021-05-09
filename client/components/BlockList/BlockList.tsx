@@ -1,11 +1,11 @@
 import Block from "components/Block";
-import { BlockInterface } from "components/BlockRenderer/BlockRenderer";
+import { IBlock } from "components/BlockRenderer/BlockRenderer";
 import React, { useRef, useState } from "react";
 
 import { usePositionReorder } from "./usePositionReorder";
 
 interface BlockListProps {
-  blocks: BlockInterface[];
+  blocks: IBlock[];
 }
 
 const BlockList = ({ blocks }: BlockListProps) => {
@@ -16,7 +16,7 @@ const BlockList = ({ blocks }: BlockListProps) => {
 
   return (
     <div>
-      {order.map((block: BlockInterface, i) => (
+      {order.map((block: IBlock, i) => (
         <Block
           key={block.text}
           block={block}

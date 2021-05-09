@@ -1,12 +1,13 @@
+import ContentEditable from "react-contenteditable";
 import React, { useState } from "react";
 
-export type BlockInterface = {
+export type IBlock = {
   id: number;
   type: string;
   text: string;
 };
 
-const typography = (block: BlockInterface) => {
+const typography = (block: IBlock) => {
   switch (block.type) {
     case "typography.h1":
       return "text-2xl font-bold mt-6";
@@ -20,7 +21,7 @@ const typography = (block: BlockInterface) => {
 };
 
 interface BlockRendererProps {
-  block: BlockInterface;
+  block: IBlock;
 }
 
 const BlockRenderer = ({ block }: BlockRendererProps) => {
@@ -28,13 +29,17 @@ const BlockRenderer = ({ block }: BlockRendererProps) => {
   const [text, setText] = useState(block.text);
 
   return (
-    <input
-      className={
-        "bg-transparent w-full outline-none y-auto " + typography(block)
-      }
-      value={text}
-      onChange={(e) => setText(e.target.value)}
-    />
+    <div className="relative">
+      <ContentEditable
+        className={
+          "bg-transparent w-full outline-none y-auto text-left break-words " +
+          typography(block)
+        }
+        onChange={(e) => setText(e.target.value)}
+        contentEditable
+        html={text}
+      />
+    </div>
   );
 };
 

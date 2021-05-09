@@ -7,11 +7,11 @@ import {
   useMotionValue,
 } from "framer-motion";
 import { useMeasurePosition } from "components/BlockList/useMeasurePosition";
-import BlockRenderer from "components/BlockRenderer";
-import { BlockInterface } from "components/BlockRenderer/BlockRenderer";
+import BlockRenderer from "components/BlockRenderer/BlockRenderer";
+import { IBlock } from "components/BlockRenderer/BlockRenderer";
 
 interface BlockProps {
-  block: BlockInterface;
+  block: IBlock;
   i: number;
   updatePosition: any;
   updateOrder: any;
