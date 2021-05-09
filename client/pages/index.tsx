@@ -1,12 +1,13 @@
-import Block from "components/Block";
-import BlockList from "components/BlockList";
+import Page from "components/Page";
+import React from "react";
 
 const Home = () => {
   return (
     <div>
       <h1 className="text-2xl">
-        Welcome to <span className="italic">your</span> Notive
-        <BlockList />
+        <div className="w-1/2 mx-auto my-6">
+          <Page />
+        </div>
       </h1>
     </div>
   );
