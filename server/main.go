@@ -1,15 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"time"
 
+	"github.com/davecgh/go-spew/spew"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
 type Block struct {
-	ID uint `gorm:"primarykey"`
+	ID uint `gorm:"primaryKey"`
 
 	CreatedAt time.Time
 
@@ -21,25 +21,12 @@ type Block struct {
 	Type string
 
 	// Parent ID
+	// Each Block has ONE Parent
 	ParentID uint
 
-	// Parent Block
-	Parent *Block `gorm:"foreignKey:ParentID"`
-
 	// Children Blocks
-	Children []Block
-
-	// b1(page)
-	// -> b2(text1)
-	// -> b3(text2)
-}
-
-func printBlock(block Block) {
-	fmt.Printf("Block: %v %v", block.ID, block.Type)
-	fmt.Printf(" Parent: %v", block.ParentID)
-
-	fmt.Println("")
-
+	// Each Block has MANY Children
+	Children []Block `gorm:"foreignKey:ParentID"`
 }
 
 func main() {
@@ -58,14 +45,77 @@ func main() {
 	subBlock := &Block{Type: "text1", ParentID: block.ID}
 	db.Create(subBlock)
 
+	// Create sub-sub-block
+	subSubBlock := &Block{Type: "sub-sub-block", ParentID: subBlock.ID}
+	db.Create(subSubBlock)
+
 	// Create sub-block
 	subBlock2 := &Block{Type: "text2", ParentID: block.ID}
 	db.Create(subBlock2)
 
-	var blocks []Block
-	db.Preload("Parent").First(&blocks, 1)
+	// spew.Dump(getSubBlocks(1, db))
 
-	for _, block := range blocks {
-		printBlock(block)
-	}
+	spew.Dump(getBlockPath(3, db))
 }
+
+// Return all sub-blocks of a block given it's ID
+func getSubBlocks(id uint, db *gorm.DB) Block {
+	var block Block
+	db.Preload("Children").First(&block, id)
+
+	return block
+}
+
+// Get a block given it's ID
+func getBlock(id uint, db *gorm.DB) Block {
+	var block Block
+	db.First(&block, id)
+
+	return block
+}
+
+// Return all of the blocks to reach the root node
+func getBlockPath(id uint, db *gorm.DB) []Block {
+	// Store the path as we go
+	var path []Block
+
+	// Target so far
+	target := id
+
+	// Until the parent is 0 (root) keep going
+	i := 0
+	for i < 1 {
+			// Get Target Block
+			block := getBlock(target, db)
+			path = append(path, block);
+
+			if(block.ParentID == 0) {
+				i++
+			} else {
+				target = block.ParentID
+			}
+	}
+
+	// path = append(path, blo)
+	return path
+}
+
+// // todo: Handle block create
+// func createBlock() Block {
+
+// }
+
+// // todo: Handle block update
+// func updateBlock() Block {
+	
+// }
+
+// // todo: Handle block delete
+// func deleteBlock() Block {
+
+// }
+
+// // todo: Handle block move
+// func moveBlock(id uint, target uint) Block {
+
+// }
