@@ -7,9 +7,9 @@ type RecursivePageProps = {
 
 const RecursivePage = ({ pages }: RecursivePageProps) => {
   return (
-    <div>
-      {pages.map((page: IPage) => (
-        <div className="ml-3">
+    <div key={`sidebar-block-group`}>
+      {pages.map((page: IPage, index) => (
+        <div className="ml-3" key={`sidebar-block-${index}`}>
           <p>
             {page.emoji} {page.title}
           </p>

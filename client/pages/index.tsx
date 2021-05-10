@@ -27,7 +27,7 @@ const Home = () => {
         { id: 1, type: "typography.h1", text: "Heading 1" },
         { id: 2, type: "typography.p", text: "Wow, look at this line!" },
         { id: 3, type: "typography.h2", text: "Subheading 🚀" },
-        { id: 3, type: "typography.p", text: "No - Look at me! 🙏" },
+        { id: 4, type: "typography.p", text: "No - Look at me! 🙏" },
       ],
     },
     {
@@ -37,7 +37,7 @@ const Home = () => {
         { id: 1, type: "typography.h1", text: "Heading 1" },
         { id: 2, type: "typography.p", text: "Wow, look at this line!" },
         { id: 3, type: "typography.h2", text: "Subheading 🚀" },
-        { id: 3, type: "typography.p", text: "No - Look at me! 🙏" },
+        { id: 4, type: "typography.p", text: "No - Look at me! 🙏" },
       ],
     },
   ];

@@ -19,14 +19,3 @@ a {
 * {
   box-sizing: border-box;
 }
-
-.custom-block::before {
-  content: "";
-  position: absolute;
-  width: 120%;
-  height: 120%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-}

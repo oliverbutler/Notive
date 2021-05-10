@@ -1,8 +1,9 @@
-import BlockList from "components/BlockList";
 import { IBlock } from "components/BlockRenderer/BlockRenderer";
-// import { Emoji } from "components/EmojiPicker/EmojiPicker";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+const BlockList = dynamic(import("components/BlockList/BlockList"));
 
 export type IPage = {
   pages?: IPage[];
@@ -22,14 +23,20 @@ type Props = {
  * @returns
  */
 const Page = ({ page }: Props) => {
+  const [winReady, setWinReady] = useState(false);
+
+  useEffect(() => {
+    setWinReady(true);
+  }, []);
+
   return (
     <div>
-      <motion.div className="text-7xl mb-6 p-2 w-min hover:bg-gray-100 rounded-md cursor-pointer relative">
+      <div className="text-7xl mb-6 p-2 w-min hover:bg-gray-100 rounded-md cursor-pointer relative select-none">
         {page.emoji}
-      </motion.div>
+      </div>
 
       <h1 className="text-4xl font-bold">{page.title}</h1>
-      <BlockList blocks={page.blocks} />
+      {winReady ? <BlockList blocks={page.blocks} /> : null}
     </div>
   );
 };

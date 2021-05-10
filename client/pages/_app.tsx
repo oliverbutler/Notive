@@ -24,6 +24,7 @@ const Wrapper = ({ children }) => {
       setTheme(theme === "light" ? "dark" : "light");
     }
   };
+
   return (
     <div id="App" className="flex flex-col">
       <Head>

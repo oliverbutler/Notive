@@ -1,33 +1,62 @@
 import Block from "components/Block";
 import { IBlock } from "components/BlockRenderer/BlockRenderer";
-import React, { useRef, useState } from "react";
-
-import { usePositionReorder } from "./usePositionReorder";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  resetServerContext,
+} from "react-beautiful-dnd";
 
 interface BlockListProps {
   blocks: IBlock[];
 }
 
 const BlockList = ({ blocks }: BlockListProps) => {
-  const [order, updatePosition, updateOrder] = usePositionReorder(blocks);
+  const [order, setOrder] = useState<IBlock[]>(blocks);
 
-  // Current drag is used to hide all handles if an element is selected
-  const [currentDrag, setCurrentDrag] = useState<boolean>(false);
+  const reorder = (list: any[], startIndex: number, endIndex: number) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+  };
+
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+    const items = reorder(order, result.source.index, result.destination.index);
+    setOrder(items as IBlock[]);
+  };
 
   return (
-    <div>
-      {order.map((block: IBlock, i) => (
-        <Block
-          key={block.text}
-          block={block}
-          i={i}
-          updatePosition={updatePosition}
-          updateOrder={updateOrder}
-          draggable={currentDrag ? false : true}
-          emitDrag={setCurrentDrag}
-        />
-      ))}
-    </div>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="droppable">
+        {(provided, snapshot) => (
+          <div {...provided.droppableProps} ref={provided.innerRef}>
+            {order.map((block, blockIndex) => {
+              return (
+                <Draggable
+                  key={`block-${block.id}`}
+                  draggableId={String(block.id)}
+                  index={blockIndex}
+                >
+                  {(provided, snapshot) => (
+                    <div ref={provided.innerRef} {...provided.draggableProps}>
+                      <Block
+                        block={block}
+                        dragHandleProps={provided.dragHandleProps}
+                      />
+                    </div>
+                  )}
+                </Draggable>
+              );
+            })}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 

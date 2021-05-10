@@ -32,7 +32,7 @@ const BlockRenderer = ({ block }: BlockRendererProps) => {
     <div className="relative">
       <ContentEditable
         className={
-          "bg-transparent w-full outline-none y-auto text-left break-words " +
+          "bg-transparent w-full max-w-full outline-none y-auto text-left break-words " +
           typography(block)
         }
         onChange={(e) => setText(e.target.value)}
