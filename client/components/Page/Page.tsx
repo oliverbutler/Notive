@@ -1,19 +1,11 @@
-import { IBlock } from "components/BlockRenderer/BlockRenderer";
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
-
-const BlockList = dynamic(import("components/BlockList/BlockList"));
-
-export type IPage = {
-  pages?: IPage[];
-  blocks: IBlock[];
-  emoji: string;
-  title: string;
-};
+import React from "react";
+import { PageBlock } from "types/block";
+import IconRender from "components/IconRender";
+import ContentBlockList from "components/ContentBlock/ContentBlockList";
 
 type Props = {
-  page: IPage;
+  page: PageBlock;
 };
 
 /**
@@ -23,20 +15,14 @@ type Props = {
  * @returns
  */
 const Page = ({ page }: Props) => {
-  const [winReady, setWinReady] = useState(false);
-
-  useEffect(() => {
-    setWinReady(true);
-  }, []);
-
   return (
-    <div>
-      <div className="text-7xl mb-6 p-2 w-min hover:bg-gray-100 rounded-md cursor-pointer relative select-none">
-        {page.emoji}
+    <div className="page min-h-full flex flex-col">
+      <div className="text-7xl mb-6 mt-12 p-2 w-min hover:bg-gray-100 rounded-md cursor-pointer relative select-none">
+        <IconRender icon={page.icon} />
       </div>
 
       <h1 className="text-4xl font-bold">{page.title}</h1>
-      {winReady ? <BlockList blocks={page.blocks} /> : null}
+      <ContentBlockList blocks={page.children} />
     </div>
   );
 };

@@ -1,33 +1,38 @@
-import { IPage } from "components/Page/Page";
+import IconRender from "components/IconRender";
 import React from "react";
+import { Block, PageBlock, Icon, isPageBlock, isIcon } from "types/block";
 
 type RecursivePageProps = {
-  pages: IPage[];
+  blocks: Block[];
 };
 
-const RecursivePage = ({ pages }: RecursivePageProps) => {
+const RecursivePage = ({ blocks }: RecursivePageProps) => {
   return (
     <div key={`sidebar-block-group`}>
-      {pages.map((page: IPage, index) => (
-        <div className="ml-3" key={`sidebar-block-${index}`}>
-          <p>
-            {page.emoji} {page.title}
-          </p>
-          {page.pages && <RecursivePage pages={page.pages} />}
-        </div>
-      ))}
+      {blocks.map((page, index) => {
+        if (isPageBlock(page)) {
+          return (
+            <div className="ml-3" key={`sidebar-block-${index}`}>
+              <div className="flex flex-row">
+                <IconRender icon={page.icon} className="mr-1" /> {page.title}
+              </div>
+              {page.children && <RecursivePage blocks={page.children} />}
+            </div>
+          );
+        }
+      })}
     </div>
   );
 };
 
 type SidebarProps = {
-  pages: IPage[];
+  blocks: Block[];
 };
 
-const Sidebar = ({ pages }: SidebarProps) => {
+const Sidebar = ({ blocks }: SidebarProps) => {
   return (
     <div id="sidebar" className="w-48 bg-gray-50 h-screen">
-      <RecursivePage pages={pages} />
+      <RecursivePage blocks={blocks} />
     </div>
   );
 };

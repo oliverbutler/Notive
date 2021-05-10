@@ -1,53 +1,58 @@
 import Navbar from "components/Navbar/Navbar";
-import Page, { IPage } from "components/Page/Page";
+import Page from "components/Page/Page";
 import Sidebar from "components/Sidebar/Sidebar";
 import React from "react";
+import { Block, PageBlock, TypographyBlock } from "types/block";
 
 const Home = () => {
-  const pages: IPage[] = [
-    {
-      title: "Projects",
-      emoji: "🚀",
-      blocks: [{ id: 1, type: "typography.h1", text: "Many Projects" }],
-      pages: [
-        {
-          title: "Notive",
-          emoji: "💻",
-          blocks: [
-            { id: 1, type: "typography.h1", text: "Notive ❤️" },
-            { id: 2, type: "typography.p", text: "Brand new text editor" },
-          ],
-        },
-      ],
+  const headerBlock: TypographyBlock = {
+    id: "2",
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+    variant: "p",
+    content: "I love you Tommy ❤️",
+    parentId: "1",
+  };
+
+  const textBlock: TypographyBlock = {
+    id: "4",
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+    variant: "h1",
+    content: "Heading init",
+    parentId: "1",
+  };
+
+  const pageSub: PageBlock = {
+    id: "3",
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+    title: "Bubbles Space",
+    icon: {
+      emoji: "🐈‍⬛",
     },
-    {
-      title: "Todo List",
-      emoji: "✅",
-      blocks: [
-        { id: 1, type: "typography.h1", text: "Heading 1" },
-        { id: 2, type: "typography.p", text: "Wow, look at this line!" },
-        { id: 3, type: "typography.h2", text: "Subheading 🚀" },
-        { id: 4, type: "typography.p", text: "No - Look at me! 🙏" },
-      ],
+  };
+
+  const page: PageBlock = {
+    id: "1",
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+    title: "Page time 🚀",
+    icon: {
+      emoji: "🥰",
     },
-    {
-      title: "House Hunting",
-      emoji: "🏡",
-      blocks: [
-        { id: 1, type: "typography.h1", text: "Heading 1" },
-        { id: 2, type: "typography.p", text: "Wow, look at this line!" },
-        { id: 3, type: "typography.h2", text: "Subheading 🚀" },
-        { id: 4, type: "typography.p", text: "No - Look at me! 🙏" },
-      ],
-    },
-  ];
+    children: [textBlock, headerBlock, pageSub],
+  };
+
+  const blocks: Block[] = [page];
+
   return (
     <div id="app" className="flex flex-row">
-      <Sidebar pages={pages} />
+      <Sidebar blocks={blocks} />
       <div id="page-container" className="flex flex-col flex-grow">
         <Navbar />
-        <div className="w-1/2 mx-auto my-6">
-          <Page page={pages[1]} />
+        <div className="w-1/2 mx-auto my-6 min-h-full">
+          <Page page={page} />
         </div>
       </div>
     </div>

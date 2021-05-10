@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import BlockRenderer from "components/BlockRenderer/BlockRenderer";
-import { IBlock } from "components/BlockRenderer/BlockRenderer";
+import { motion } from "framer-motion";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 
 import styles from "./Block.module.scss";
 interface BlockProps {
-  block: IBlock;
+  children?: any;
   dragHandleProps?: DraggableProvidedDragHandleProps;
 }
 
-const Block = ({ block, dragHandleProps }: BlockProps) => {
+const BlockHandle = ({ children, dragHandleProps }: BlockProps) => {
   const [isHover, setHover] = useState(false);
 
   const variants = {
@@ -18,9 +16,12 @@ const Block = ({ block, dragHandleProps }: BlockProps) => {
     noHover: { opacity: 0 },
   };
 
+  // py-0.5 on outside and py-1 on the inside due to a bug with margin collapse https://github.com/atlassian/react-beautiful-dnd/issues/953
   return (
     <div
-      className={styles.Block + " flex flex-row group text-center relative"}
+      className={
+        styles.Block + " flex flex-row group text-center relative py-0.5"
+      }
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -71,11 +72,9 @@ const Block = ({ block, dragHandleProps }: BlockProps) => {
           </motion.div>
         </div>
       </motion.div>
-      <div className="flex-grow">
-        <BlockRenderer block={block} />
-      </div>
+      <div className="flex-grow py-0.5 px-1 ">{children}</div>
     </div>
   );
 };
 
-export default Block;
+export default BlockHandle;
