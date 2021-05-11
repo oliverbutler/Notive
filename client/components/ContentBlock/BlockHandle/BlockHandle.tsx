@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 
 import styles from "./Block.module.scss";
+import classNames from "classnames";
 interface BlockProps {
   children?: any;
   dragHandleProps?: DraggableProvidedDragHandleProps;
@@ -19,9 +20,10 @@ const BlockHandle = ({ children, dragHandleProps }: BlockProps) => {
   // py-0.5 on outside and py-1 on the inside due to a bug with margin collapse https://github.com/atlassian/react-beautiful-dnd/issues/953
   return (
     <div
-      className={
-        styles.Block + " flex flex-row group text-center relative py-0.5"
-      }
+      className={classNames(
+        styles.Block,
+        "flex flex-row group text-center relative py-0.5"
+      )}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -72,7 +74,7 @@ const BlockHandle = ({ children, dragHandleProps }: BlockProps) => {
           </motion.div>
         </div>
       </motion.div>
-      <div className="flex-grow py-0.5 px-1 ">{children}</div>
+      <div className="flex-grow py-0.5">{children}</div>
     </div>
   );
 };

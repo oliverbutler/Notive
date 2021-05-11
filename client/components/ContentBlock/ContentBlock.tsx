@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Block } from "types/block";
 import BlockHandle from "./BlockHandle";
 import BlockRenderer from "./BlockRenderer/BlockRenderer";

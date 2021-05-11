@@ -5,34 +5,6 @@ import React from "react";
 import { Block, PageBlock, TypographyBlock } from "types/block";
 
 const Home = () => {
-  const headerBlock: TypographyBlock = {
-    id: "2",
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    variant: "p",
-    content: "I love you Tommy ❤️",
-    parentId: "1",
-  };
-
-  const textBlock: TypographyBlock = {
-    id: "4",
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    variant: "h1",
-    content: "Heading init",
-    parentId: "1",
-  };
-
-  const pageSub: PageBlock = {
-    id: "3",
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    title: "Bubbles Space",
-    icon: {
-      emoji: "🐈‍⬛",
-    },
-  };
-
   const page: PageBlock = {
     id: "1",
     createdAt: Date.now(),
@@ -41,7 +13,50 @@ const Home = () => {
     icon: {
       emoji: "🥰",
     },
-    children: [textBlock, headerBlock, pageSub],
+    children: [
+      {
+        id: "4",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        variant: "h1",
+        content: "Heading init",
+        parentId: "1",
+      },
+      {
+        id: "2",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        variant: "p",
+        content: "I love you Tommy ❤️",
+        parentId: "1",
+      },
+      {
+        id: "6",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        variant: "h2",
+        content: "Links init",
+        parentId: "1",
+      },
+      {
+        id: "3",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        title: "Bubbles Space",
+        icon: {
+          emoji: "🐈‍⬛",
+        },
+      },
+      {
+        id: "5",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        title: "Crypto",
+        icon: {
+          emoji: "🤑",
+        },
+      },
+    ],
   };
 
   const blocks: Block[] = [page];

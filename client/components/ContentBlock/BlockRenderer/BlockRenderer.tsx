@@ -11,10 +11,14 @@ interface Props {
  * Takes a ContentBlock and displays the appropriate type of Block
  */
 const BlockRenderer = ({ block }: Props) => {
-  if (isTypographyBlock(block))
+  if (isTypographyBlock(block)) {
     return <TypographyBlockRenderer block={block} />;
-  if (isPageBlock(block)) return <PageInlineRenderer page={block} />;
-  else return <p>Unknown Block Type</p>;
+  }
+  if (isPageBlock(block)) {
+    return <PageInlineRenderer page={block} />;
+  } else {
+    return <p>Unknown Block Type</p>;
+  }
 };
 
 export default BlockRenderer;

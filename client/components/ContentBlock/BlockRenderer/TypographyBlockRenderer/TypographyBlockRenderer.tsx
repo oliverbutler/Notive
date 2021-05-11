@@ -5,11 +5,11 @@ import { TypographyBlock } from "types/block";
 const typography = (block: TypographyBlock) => {
   switch (block.variant) {
     case "h1":
-      return "text-2xl font-bold mt-6";
+      return "text-3xl font-bold mt-6";
     case "h2":
-      return "text-xl font-bold mt-4";
+      return "text-2xl font-bold mt-4";
     case "h3":
-      return "text-lg font-bold mt-3";
+      return "text-xl font-bold mt-3";
     default:
       return "text-base";
   }
